@@ -1,0 +1,45 @@
+public class TreeNode{
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x){
+        val = x;
+    }
+
+    // No use parent
+    public TreeNode inorderSuccessor(TreeNode root, TreeNode p){
+        if(root == null)
+            return null;
+        TreeNode next = null;
+        TreeNode c = root;
+        if(c == null)
+            return null;
+        if(c.right == null)
+            return next;
+        c = c.right;
+        while(c.left != null)
+            c = c.left;
+        return c;
+    }
+
+    // Use parent
+    public TreeNode inorderSunceesor2(TreeNode node){
+        TreeNode result = null;
+        TreeNode right = node.right;
+        while(right != null){
+            result = right;
+            right = right.left;
+        }
+        if(result != null)
+            return result;
+
+        right = node;
+
+        while(right != null){
+            if(right.parent !=null && right.parent.left == right)
+                return right.parent;
+            right = right.parent;
+        }
+        return null;
+    }
+}

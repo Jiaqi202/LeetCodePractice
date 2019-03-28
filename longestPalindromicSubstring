@@ -1,0 +1,23 @@
+class Solution {
+    private int low, diff;
+    public String longestPalindrome(String s) {
+        if(s.length() < 2) return s;
+        for(int i=0; i<s.length()-1; i++){
+            panlindrome(s, i, i);
+            panlindrome(s,i,i+1);
+        }
+        return s.substring(low, low+diff);
+    }
+
+    public void panlindrome(String s, int j, int k){
+        while(j>=0 && k<s.length() && s.charAt(j) == s.charAt(k)){
+            j--;
+            k++;
+        }
+        if(diff<k-j-1){
+            diff = k-j-1;
+            low = j+1;
+        }
+
+    }
+}

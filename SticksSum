@@ -1,0 +1,19 @@
+public class sticks{
+    public int stickssum(List<Integer> nums){
+        PriorityQueue<Integer, List<Integer>> pq = new ArrayList<>();
+        for(int i : nums) pq.push(i);
+        int cost = 0;
+        while(!pq.isEmpty()){
+            int val1 = pq.top();
+            pq.pop();
+            if(pq.isEmpty()){
+                break;
+            }
+            int val2 = pq.top();
+            pq.pop();
+            cost += val1 + val2;
+            pq.push(val1 + val2);
+        }
+        return cost;
+    }
+}

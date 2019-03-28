@@ -1,0 +1,89 @@
+/*
+Given an array of integers nums sorted in ascending order, find the starting and ending position of a given target value.
+
+Your algorithm's runtime complexity must be in the order of O(log n).
+
+If the target is not found in the array, return [-1, -1].
+
+Example 1:
+
+Input: nums = [5,7,7,8,8,10], target = 8
+Output: [3,4]
+Example 2:
+
+Input: nums = [5,7,7,8,8,10], target = 6
+Output: [-1,-1]
+ */
+
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        int[] res = new int[2];
+        res[0] = findLow(nums, target);
+        res[1] = findHigh(nums, target);
+        return res;
+    }
+    public int findLow(int[] nums, int target){
+        int idx = -1;
+        int left = 0, right=nums.length-1;
+        while(left<=right){
+            int mid=left+(right-left)/2;
+            if(nums[mid]>=target){
+                right = mid-1;
+            }else{
+                left = mid+1;
+            }
+            if(nums[mid] == target) idx = mid;
+        }
+        return idx;
+    }
+    public int findHigh(int[]nums, int target){
+        int idx = -1;
+        int left = 0, right=nums.length-1;
+        while(left<=right){
+            int mid=left+(right-left)/2;
+            if(nums[mid]<=target){
+                left=mid+1;
+            }else
+                right=mid-1;
+            if(nums[mid] == target) idx = mid;
+        }
+        return idx;
+    }
+
+    //Only first occurence index
+
+    public static void main(String[] args) {
+
+        int [] nums = {1,1,1,1,4,4,4,6,6,6,6,8,8};
+        int target = 10;
+
+        int index = binSearch (0, nums.length-1, nums, target);
+        if (index == -1) {
+            System.out.println("null");
+            return ;
+        } else {
+            for (int i = index; i >= 0 ; i --) {
+                if (nums[i] != target) {
+                    System.out.println(i+1);
+                    return ;
+                }
+            }
+        }
+
+    }
+
+    public static int binSearch (int pre, int end, int [] nums, int target) {
+
+        while (pre < end && pre <= nums.length-1 && end >=0) {
+            int mid = (pre + end) / 2;
+            if (nums[mid] < target) {
+                pre = mid + 1;
+            } else if (nums[mid] > target) {
+                end = mid - 1;
+            } else {
+                return mid;
+            }
+        }
+        return -1;
+    }
+}
